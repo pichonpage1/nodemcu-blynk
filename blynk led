@@ -1,0 +1,40 @@
+#define BLYNK_PRINT Serial  
+
+#include <ESP8266WiFi.h>  
+#include <BlynkSimpleEsp8266.h> 
+// You should get Auth Token in the Blynk App.  // Go to the Project Settings (nut icon). 
+
+char auth[] = "Q1fv0L1JL53_cAPkH8h-kkKLNI-IvfMm";  
+char ssid[] = "Nombre de tu red";  
+char pass[] = "password de tu red"; 
+char server[] = "192.168.1.138"; // ip server marcado en la app blynk
+int port = 8080; // puerto utilizado en lugar del 9443 que utiliza la app para comunicarse con el servidor local en el pc
+
+
+WidgetLED led1(V1); 
+
+BlynkTimer timer; 
+
+// V1 LED Widget is blinking  
+void blinkLedWidget() {   
+  if (led1.getValue()) {      led1.off();     
+  Serial.println("LED on V1: off");
+  } else {      
+    led1.on();      
+  Serial.println("LED on V1: on");    } } 
+
+
+void setup()  {   
+  // Debug console    
+  Serial.begin(9600); 
+  WiFi.begin(ssid, pass);
+  Blynk.config(auth, server, port);
+  Blynk.connect();
+  
+  //timer.setInterval(1000L, blinkLedWidget);
+} 
+void loop() 
+{   
+  Blynk.run();    
+  timer.run();  
+  }
